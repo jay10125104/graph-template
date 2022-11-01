@@ -59,6 +59,7 @@ int main(){
             ans[des] = min(ans[des],ans[src]+i.first);
         }
     }
+    //for cycle detection we need to run this loop one more time and it updation happen then we  can say that we have  a negative cycle.
     for(int i=2;i<ans.size();i++){
         cout<<ans[i]<<" ";
     }
