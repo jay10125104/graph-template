@@ -1,38 +1,85 @@
-bool isbipartitie(vector<int> adj[], vector<int> &visited, map<pair<int, int>, int> &m)
-{
-    queue<pair<int, int>> q;
-    int count = 1;
-    q.push({1, 1});
-    int flag1 = 1;
-    int flag2 = 2;
-    while (q.size())
-    {
-        int x = q.size();
-        while (x--)
-        {
-            auto mid = q.front();
-            q.pop();
-            if (visited[mid.first] && visited[mid.first] != mid.second)
-            {
-                return false;
-            }
-            else
-            {
-                visited[mid.first] = count;
-            }
-            for (auto it : adj[mid.first])
-            {
-                if (visited[it] == 0)
-                {
-                    q.push({it, count + 1});
-                    m[{mid.first, it}] = flag1;
-                    m[{it, mid.first}] = flag2;
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define for0(i,n) for(int i=0;i<n;i++)
+#define vi vector<int>
+#define pb push_back
+#define sz(x) sizeof(x)
+#define vec(n,x) vector<int>v(n,x)
+const ll INF = 1e18;
+const ll MOD = 1000000007;
+#define hi  ll tests; cin>>tests; while(tests--)
+#define all(x) x.begin(),x.end()
+#define readv(vec) for(auto &x:vec){cin>>x;}
+#define PHI M_PI
+#define graph int V;cin>>V;vector<int>adj[V];int e;for(int i=0;i<e;i++){int u,v;cin>>u>>v;adj[u].push_back(v);adj[v].push_back(u);}
+#define printv(vec) for(auto x:vec){cout<<x<<' ';}cout<<endl;
+#define sortasc(vec) sort(all(vec));
+#define sortdes(vec) sort(vec.rbegin(),vec.rend());
+#define  setpre(x)   cout<<fixed<<setprecision(10)<<x<<endl
+#define kick cout <<'C'<<'a'<<'s'<<'e'<<' '<<'#'<< k << ':'<<' '
+vector<ll> sieve(int n) {int*arr = new int[n + 1](); vector<ll> vect; for (int i = 2; i <= n; i++)if (arr[i] == 0) {vect.push_back(i); for (int j = 2 * i; j <= n; j += i)arr[j] = 1;} return vect;}
+bool pal(string s){int i = 0;int j = s.size() - 1;while (i < j){if (s[i] != s[j]){return false;}i++;j--;}return true;}
+ll op1(ll a, ll b, ll m) { a = a % m; b = b % m; return (((a + b) % m) + m) % m;}
+ll op2(ll a, ll b, ll m) { a = a % m; b = b % m; return (((a * b) % m) + m) % m;}
+ll op3(ll a, ll b, ll m) { a = a % m; b = b % m; return (((a - b) % m) + m) % m;}
+int powerexpo(int x,int y,int p){int res = 1;x = x % p; if (x == 0) return 0;while (y > 0){if (y & 1){res = (res*x) % p;}y = y>>1;x = (x*x) % p;}return res;}
+ll C(ll a , ll b) { return (a+b-1)/b ;}
+struct unionfind{
+int n;
+vector<int>rank;
+vector<int>parent;
+unionfind(int n){
+rank.resize(n);
+fill(rank.begin(),rank.end(),0);
+parent.resize(n);
+for(int i=0;i<n;i++){
+parent[i]=i;
+}}
+int find(int node){if(node==parent[node]){return node;}else{return parent[node] = find(parent[node]);}}
+bool Union(int u,int v){u = find(u);v = find(v);if(u==v){return false;}if(rank[u]<rank[v]){parent[u] = v;}else if(rank[u]>rank[v]){parent[v]=u;}else{parent[v]=u;rank[u]++;}return true;}};
+//code by CasioFx-69
+int color[100001];
+int bipartite(int n,vector<int>adj[]){
+    queue<int>q;
+    for(int i=1;i<=n;i++){
+        if(color[i]==-1){
+            q.push(i);
+            color[i]=0;
+            while(q.size()){
+                int x = q.front();
+                q.pop();
+                for(auto &it:adj[x]){
+                    if(color[it]==color[x]){
+                        return 0;
+                    }
+                    if(color[it]==-1){
+                        color[it] = !color[x];
+                        q.push(it);
+                    }
                 }
             }
         }
-
-        swap(flag1, flag2);
-        count++;
     }
-    return true;
+}
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int n,e;
+    cin>>n>>e;
+    vector<int>adj[n+1];
+    for(int i=0;i<e;i++){
+        int u,v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    memset(color,-1,sizeof(color));
+    if(bipartit(n,adj)){
+
+    }
+    else{
+        cout<<"IMPOSSIBLE"<<endl;
+    }
+     return 0;
 }
