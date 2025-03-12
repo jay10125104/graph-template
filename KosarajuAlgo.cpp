@@ -59,6 +59,8 @@ void dfs2(vector<int>adj[],int src,vector<int>&visited){
     }
     // s.push(src);
 }
+// Time Complexity: O(V + E), where V is the number of vertices and E is the number of edges. Each vertex and edge is processed exactly once in both DFS traversals.
+// Auxiliary Space: O(V) for storing the visited array and stack.
 int main(){
     int V;
     cin>>V;
